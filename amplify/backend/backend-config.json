@@ -32,17 +32,16 @@
     }
   },
   "function": {
-    "createUserProfile": {
+    "addRegisteredUser": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [
         {
-          "category": "storage",
-          "resourceName": "userProfile",
+          "category": "api",
+          "resourceName": "reactamplified",
           "attributes": [
-            "Name",
-            "Arn"
+            "GraphQLAPIIdOutput"
           ]
         }
       ]

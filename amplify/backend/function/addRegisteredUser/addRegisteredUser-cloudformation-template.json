@@ -16,13 +16,9 @@
     "s3Key": {
       "Type": "String"
     },
-    "storageuserProfileName": {
+    "apireactamplifiedGraphQLAPIIdOutput": {
       "Type": "String",
-      "Default": "storageuserProfileName"
-    },
-    "storageuserProfileArn": {
-      "Type": "String",
-      "Default": "storageuserProfileArn"
+      "Default": "apireactamplifiedGraphQLAPIIdOutput"
     }
   },
   "Conditions": {
@@ -55,12 +51,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "createUserProfile",
+            "addRegisteredUser",
             {
               "Fn::Join": [
                 "",
                 [
-                  "createUserProfile",
+                  "addRegisteredUser",
                   "-",
                   {
                     "Ref": "env"
@@ -78,11 +74,34 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "STORAGE_USERPROFILE_NAME": {
-              "Ref": "storageuserProfileName"
+            "API_REACTAMPLIFIED_USERTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apireactamplifiedGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+              }
             },
-            "STORAGE_USERPROFILE_ARN": {
-              "Ref": "storageuserProfileArn"
+            "API_REACTAMPLIFIED_USERTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apireactamplifiedGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
+            "API_REACTAMPLIFIED_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apireactamplifiedGraphQLAPIIdOutput"
             }
           }
         },
@@ -103,12 +122,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "reactamplifiedLambdaRoleab5c98fd",
+            "reactamplifiedLambdaRole1c3daef6",
             {
               "Fn::Join": [
                 "",
                 [
-                  "reactamplifiedLambdaRoleab5c98fd",
+                  "reactamplifiedLambdaRole1c3daef6",
                   "-",
                   {
                     "Ref": "env"
@@ -212,16 +231,45 @@
               ],
               "Resource": [
                 {
-                  "Ref": "storageuserProfileArn"
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apireactamplifiedGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                        }
+                      }
+                    ]
+                  ]
                 },
                 {
                   "Fn::Join": [
-                    "/",
+                    "",
                     [
+                      "arn:aws:dynamodb:",
                       {
-                        "Ref": "storageuserProfileArn"
+                        "Ref": "AWS::Region"
                       },
-                      "index/*"
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apireactamplifiedGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                        }
+                      },
+                      "/index/*"
                     ]
                   ]
                 }

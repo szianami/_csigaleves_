@@ -74,7 +74,7 @@ class App extends React.Component {
 
             try {
               let listUsers = await API.graphql({ query: queries.listUsers });
-              console.log('listUsers query -- ' + listUsers)
+              console.log(listUsers)
               // const newTodo = await API.graphql(graphqlOperation(queries.getUser, {input: {
               //   id: user.attributes.sub,
               //   username: 'asd' 
@@ -95,7 +95,7 @@ class App extends React.Component {
                   },
                 }
               })
-              console.log('updateUser mutation --' + updateUser);
+              console.log(updateUser);
             } catch (err) {
               console.log({ err });
             }

@@ -1,7 +1,7 @@
 {
   "permissions": {
     "storage": {
-      "userProfile": [
+      "User:@model(appsync)": [
         "create",
         "read",
         "update",
