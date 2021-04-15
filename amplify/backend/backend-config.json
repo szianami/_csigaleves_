@@ -25,12 +25,7 @@
       "customAuth": false
     }
   },
-  "storage": {
-    "userProfile": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
-    }
-  },
+  "storage": {},
   "function": {
     "addRegisteredUser": {
       "build": true,
