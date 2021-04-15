@@ -25,24 +25,18 @@
       "customAuth": false
     }
   },
-  "storage": {
-    "userProfile": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
-    }
-  },
+  "storage": {},
   "function": {
-    "createUserProfile": {
+    "addRegisteredUser": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [
         {
-          "category": "storage",
-          "resourceName": "userProfile",
+          "category": "api",
+          "resourceName": "reactamplified",
           "attributes": [
-            "Name",
-            "Arn"
+            "GraphQLAPIIdOutput"
           ]
         }
       ]

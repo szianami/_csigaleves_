@@ -8,7 +8,6 @@ Amplify Params - DO NOT EDIT */
 const aws = require('aws-sdk');
 
 exports.handler = async (event) => {
-    // TODO implement
     
     let dynamoClient = new aws.DynamoDB();
     let date = new Date();
@@ -21,7 +20,7 @@ exports.handler = async (event) => {
           'createdAt': { S: date.toISOString() },
           'updatedAt': { S: date.toISOString() },
         },
-        TableName: 'userProfile-dev' // + process.env.ENV
+        TableName: 'User-d5p6uqeierdf5jrymwu6c222aa-' + process.env.ENV
     };
 
     // Call DynamoDB
