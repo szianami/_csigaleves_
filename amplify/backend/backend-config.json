@@ -25,7 +25,12 @@
       "customAuth": false
     }
   },
-  "storage": {},
+  "storage": {
+    "favmusic": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation"
+    }
+  },
   "function": {
     "addRegisteredUser": {
       "build": true,

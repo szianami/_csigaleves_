@@ -1,7 +1,14 @@
 type User @model {
   id: ID!
   username: String!
-  email: String! 
+  email: String!
   refreshToken: String
 }
 
+type MusicTaste @model @key(fields:["username","artist"]) 
+@key(name:"byArtist",fields:["artist"],queryField:"byArtist"){
+  id: ID!
+  username: String!
+  artist: String!
+  updatedAt: AWSDateTime!
+}

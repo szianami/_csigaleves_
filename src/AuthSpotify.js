@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Amplify, { API } from "aws-amplify";
+import Amplify, { API, Storage } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import SpotifyWebApi from 'spotify-web-api-js';
 
@@ -12,6 +12,7 @@ import spinner from './spinner.gif';
 Amplify.configure(awsExports);
 const AWS = require("aws-sdk");
 AWS.config.update({ region: "eu-central-1" });
+
 
 const spotifyApi = new SpotifyWebApi();
 
