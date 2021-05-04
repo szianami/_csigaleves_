@@ -17,6 +17,7 @@ exports.handler = async (event) => {
           'username': {S: event.userName },
           'id': {S: event.request.userAttributes.sub},
           'email': { S: event.request.userAttributes.email },
+          'spotifyAuthorized': 'false',
           'createdAt': { S: date.toISOString() },
           'updatedAt': { S: date.toISOString() },
         },

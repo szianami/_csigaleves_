@@ -1,0 +1,7 @@
+{
+    "tableName": "favMusic",
+    "partitionKeyName": "username",
+    "partitionKeyType": "S",
+    "sortKeyName": "artist",
+    "sortKeyType": "S"
+}

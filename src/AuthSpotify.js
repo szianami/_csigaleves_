@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Amplify, { API } from "aws-amplify";
+import Amplify, { API, Storage } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import SpotifyWebApi from 'spotify-web-api-js';
-
+import { AmplifySignOut } from '@aws-amplify/ui-react'
 import awsExports from "./aws-exports";
 import * as mutations from "./graphql/mutations";
 import * as queries from "./graphql/queries";
@@ -33,6 +33,9 @@ function withSpotifyAuthenticator(WrappedComponent) {
     // }
 
     async componentDidMount() {
+
+
+
       console.log("SpotifyAuth componentDidMount");
       let refreshToken = await this.getRefreshToken();
       
@@ -90,12 +93,15 @@ function withSpotifyAuthenticator(WrappedComponent) {
               console.log("current user sub -- " + user.attributes.sub);
 
               try {
+                let now = new Date().toISOString;
                 let updateUser = await API.graphql({
                   query: mutations.updateUser,
                   variables: {
                     input: {
                       id: user.attributes.sub,
                       refreshToken: res.refresh_token,
+                      spotifyAuthorized: 'true',
+                      // musicTasteUpdatedAt: a tábla változása triggereli az updateMusicTaste lambdát
                     },
                   },
                 });
@@ -186,7 +192,6 @@ function withSpotifyAuthenticator(WrappedComponent) {
         // TODO : expires in ... kezelése
       }
       console.log(res);
-
     }
 
     fetchUserData = async () => {
@@ -212,6 +217,7 @@ function withSpotifyAuthenticator(WrappedComponent) {
     }
 
     render() {
+      
       if (this.state.spinner) {
         return (
           <div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -248,6 +254,7 @@ function withSpotifyAuthenticator(WrappedComponent) {
             <a href={authorizeUrl} style={styles.button}>
               Continue with Spotify
             </a>
+            <AmplifySignOut/>
           </div>
         );
       }

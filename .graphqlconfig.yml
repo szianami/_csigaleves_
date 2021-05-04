@@ -3,6 +3,7 @@ projects:
     schemaPath: amplify\backend\api\reactamplified\schema.graphql
     includes:
       - src/graphql/**/*.js
+      - aws_directives.graphql
     excludes:
       - ./amplify/**
     extensions:
