@@ -18,7 +18,11 @@
       "function": {
         "addRegisteredUser": {
           "deploymentBucketName": "amplify-reactamplified-develop-180425-deployment",
-          "s3Key": "amplify-builds/addRegisteredUser-5a772b44386e2b414f74-build.zip"
+          "s3Key": "amplify-builds/addRegisteredUser-447654554e42766b3258-build.zip"
+        },
+        "updateMusicTaste": {
+          "deploymentBucketName": "amplify-reactamplified-develop-180425-deployment",
+          "s3Key": "amplify-builds/updateMusicTaste-4a623844627157556971-build.zip"
         }
       }
     }

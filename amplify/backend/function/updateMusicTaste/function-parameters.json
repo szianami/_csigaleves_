@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "api": {
+      "reactamplified": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "auth": {
+      "reactamplified19636619": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

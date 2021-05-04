@@ -1,12 +1,17 @@
-type User @model {
+type User @model 
+@key(name:"usersByUpdateDate",fields:["spotifyAuthorized","musicTasteUpdatedAt"],queryField:"usersByUpdateDate")
+{
   id: ID!
   username: String!
   email: String!
   refreshToken: String
+  spotifyAuthorized: String!
+  musicTasteUpdatedAt: AWSDateTime
 }
 
 type MusicTaste @model @key(fields:["username","artist"]) 
-@key(name:"byArtist",fields:["artist"],queryField:"byArtist"){
+@key(name:"byArtist",fields:["artist"],queryField:"byArtist")
+{
   id: ID!
   username: String!
   artist: String!

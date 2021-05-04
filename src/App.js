@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Amplify, { API, graphqlOperation } from 'aws-amplify'
 
-import { withAuthenticator } from '@aws-amplify/ui-react'
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 import { withSpotifyAuthenticator} from './AuthSpotify'
 import awsExports from "./aws-exports";
 import * as mutations from './graphql/mutations';
@@ -40,6 +40,7 @@ class App extends React.Component {
         <h1 style={styles.text}>{display_name}</h1>
         <img src={src} style={{borderRadius: '100%', border: '1px solid #dddddd'}} />
         <h3 style={styles.text}>friends: {this.props.user.followers.total}</h3>
+        <AmplifySignOut/>
       </div>
     )
   }
