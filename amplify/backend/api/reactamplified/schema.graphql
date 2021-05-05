@@ -1,4 +1,4 @@
-type User @model 
+type User @model
 @key(name:"usersByUpdateDate",fields:["spotifyAuthorized","musicTasteUpdatedAt"],queryField:"usersByUpdateDate")
 {
   id: ID!
@@ -9,11 +9,22 @@ type User @model
   musicTasteUpdatedAt: AWSDateTime
 }
 
-type MusicTaste @model @key(fields:["username","artist"]) 
+type MusicTaste @model @key(fields:["username","artist"])
 @key(name:"byArtist",fields:["artist"],queryField:"byArtist")
 {
   id: ID!
   username: String!
   artist: String!
   updatedAt: AWSDateTime!
+}
+
+type Match @model
+@key(fields:["id","artist"])
+@key(name:"byUser1",fields:["user1ID"],queryField:"byUser1")
+@key(name:"byUser2",fields:["user2ID"],queryField:"byUser2")
+{
+  id: ID!
+  user1ID: String!
+  user2ID: String!
+  artist: String!
 }

@@ -41,4 +41,6 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 
+# Spotify keys
 /src/config.json
+/amplify/backend/function/updateMusicTaste/src/config.json
