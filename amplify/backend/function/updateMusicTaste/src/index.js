@@ -19,7 +19,7 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const spotifyApi = new SpotifyWebApi();
 
 exports.handler = async function(event, ctx, callback) {
-  console.log(event);
+  console.log('event --- ', event);
   if (event.Records){
 	// DynamoDB trigger: User táblában változása
 	
@@ -42,6 +42,7 @@ exports.handler = async function(event, ctx, callback) {
   } else {
 	// CloudWatch trigger minden nap 17:00-kor
 	// a trigger hatására 10 user topArtistjait updateeli 
+	console.log('cloudwatch trigger ---');
 	var params = {
 		  ExpressionAttributeValues: {
 			':spotifyAuthorized': 'true',
@@ -52,18 +53,15 @@ exports.handler = async function(event, ctx, callback) {
 		 TableName: 'User-d5p6uqeierdf5jrymwu6c222aa-develop'
 	};
 	// query azokra a userekre (limit: 10 user), akik spotify authorizeolva vannak
-	docClient.query(params, async function(err, data){
-		if(err) {
-			callback(err, null);
-		} else {
-			// userek topArtistjainak updateelése a MusicTaste táblában
-			console.log(data.Items);
-			await updateMusicTaste(data.Items);
-			callback(null, data.Items);
-		}
-	});
-  }
+	try {
+		const data = await docClient.query(params).promise();
+		await updateMusicTaste(data.Items);
+	} catch (err) {
+		console.log('usersByUpdateDate query failed ', err);
+		callback(err, null);
+	}
 	
+  }
 	
 }
 
@@ -71,7 +69,6 @@ exports.handler = async function(event, ctx, callback) {
 // updateeli a MusicTaste táblát
 async function updateMusicTaste(users) {
 	for (const user of users) {
-		console.log(user);
 		let accesstoken = await getAccessToken(user.refreshToken);
 		const topArtists = await getTopArtists(accesstoken);
 		
@@ -87,15 +84,17 @@ async function updateMusicTaste(users) {
 			
 			var documentClient = new AWS.DynamoDB.DocumentClient();
 			
-			documentClient.put(params, function(err, data) {
-				if (err) console.log(err);
-				else console.log(data);
-			});
+			try {
+				await documentClient.put(params).promise();
+			} catch (err) {
+				console.log('MusicTaste update failed', err);
+			}
+			
+			// match tábla frissítése az újonnan bekerülő artistok alapján
+			await matchUsersByArtist(artist.id);
 		}
-		
-	// musicTasteUpdatedAt frissítése
-	await setMusicTasteUpdatedAt(user.id);
-	
+		// musicTasteUpdatedAt frissítése
+		await setMusicTasteUpdatedAt(user.id);
 	}
 }
 
@@ -105,11 +104,60 @@ function getTopArtists(accesToken){
 	return spotifyApi.getMyTopArtists({limit: 50})  // lehetséges intervallumok: alltime, utolsó 6 hónap, utolsó 4 hét
 	.then(function(data) {
 		let topArtists = data.body.items;
-		// console.log(topArtists);
 		return topArtists;
 	}, function(err) {
-		console.log('Something went wrong!', err);
+		console.log('Spotify get top artists call failed --- ', err);
 	});
+}
+
+// lekéri a paraméterként kapott, a MusicTaste táblába újonnan bekerülő artistokhoz tartozó usereket,
+// majd összematcheli őket a Match táblába illesztéssel
+async function matchUsersByArtist(artistID) {
+	var documentClient = new AWS.DynamoDB.DocumentClient();
+	var params = {
+		  ExpressionAttributeValues: {
+			':artistID': artistID,
+		  },
+		  IndexName: "byArtist",
+		 KeyConditionExpression: 'artist = :artistID',
+		 TableName: 'MusicTaste-d5p6uqeierdf5jrymwu6c222aa-develop'
+	};
+	// query azokra a userekre, akik szintén az adott artistot hallgatják
+	// pl BaianaSystems.id - 5JHYuwE2n7bleXMUsmtCW5
+	try {
+		const data = await documentClient.query(params).promise();
+		// userek topArtistjainak updateelése a MusicTaste táblában
+		for (const user1 of data.Items || []) {
+			for (const user2 of data.Items || []) {
+				if (user1.username !== user2.username) {
+					matchUsers(user1, user2, artistID);
+				}
+			}
+		}
+	} catch (err) {
+		console.log('byArtist query failed --- ', err);
+	}
+}
+
+// Match táblába beteszi helyes id szerint a paraméterként kapott usereket 
+async function matchUsers(user1, user2, artistID) {
+	var documentClient = new AWS.DynamoDB.DocumentClient();
+	var id = (user1.username < user2.username) ? user1.username + user2.username : user2.username + user1.username; 
+	var params = {
+			TableName : 'Match-d5p6uqeierdf5jrymwu6c222aa-develop',
+			Item: {
+				id: id,
+				user1ID: user1.username,
+				user2ID: user2.username,
+				artist: artistID,
+			},
+	};
+	// put : megnézi, hogy létezik-e egy ilyen korábbi kulcsú entry és csak utána rakja bele
+	try {
+		await documentClient.put(params).promise();
+	} catch (err) {
+		console.log('put Match entry failed --- ', err);
+	}
 }
 
 // https requestet állít össze és hajt végre
@@ -150,16 +198,15 @@ async function getAccessToken(refreshToken) {
 	try {
 		res = await request("https://accounts.spotify.com/api/token", 'POST', headers, body);
 	} catch (err) {
-		console.log(err);
+		console.log('accessToken error --- ',err);
 	}
 
 	if (res) {
-		console.log(res.access_token);
 		return res.access_token;
 	}
-	console.log(res);
 }
 
+// frissíti a musicTasteUpdatedAt timestampet
 async function setMusicTasteUpdatedAt(userID) {
 	const now = new Date().toISOString();
 	var documentClient = new AWS.DynamoDB.DocumentClient();
@@ -172,7 +219,7 @@ async function setMusicTasteUpdatedAt(userID) {
 	try {
 		await documentClient.update(params).promise();
 	} catch (err) {
-		console.log(err);
+		console.log('musicTasteUpdatedAt error --- ',err);
 	}
 	
 }

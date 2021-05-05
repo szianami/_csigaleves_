@@ -22,7 +22,7 @@
         },
         "updateMusicTaste": {
           "deploymentBucketName": "amplify-reactamplified-develop-180425-deployment",
-          "s3Key": "amplify-builds/updateMusicTaste-4a623844627157556971-build.zip"
+          "s3Key": "amplify-builds/updateMusicTaste-7377694f7955726e6541-build.zip"
         }
       }
     }
