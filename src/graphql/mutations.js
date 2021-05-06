@@ -58,11 +58,11 @@ export const createMusicTaste = /* GraphQL */ `
     $condition: ModelMusicTasteConditionInput
   ) {
     createMusicTaste(input: $input, condition: $condition) {
-      id
       username
       artist
-      updatedAt
+      artistName
       createdAt
+      updatedAt
     }
   }
 `;
@@ -72,11 +72,11 @@ export const updateMusicTaste = /* GraphQL */ `
     $condition: ModelMusicTasteConditionInput
   ) {
     updateMusicTaste(input: $input, condition: $condition) {
-      id
       username
       artist
-      updatedAt
+      artistName
       createdAt
+      updatedAt
     }
   }
 `;
@@ -86,11 +86,11 @@ export const deleteMusicTaste = /* GraphQL */ `
     $condition: ModelMusicTasteConditionInput
   ) {
     deleteMusicTaste(input: $input, condition: $condition) {
-      id
       username
       artist
-      updatedAt
+      artistName
       createdAt
+      updatedAt
     }
   }
 `;

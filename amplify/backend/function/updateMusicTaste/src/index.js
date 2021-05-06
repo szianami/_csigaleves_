@@ -32,7 +32,8 @@ exports.handler = async function(event, ctx, callback) {
 		);
 	}).map(item => ({
 		username: item.dynamodb.NewImage.username.S,
-		refreshToken: item.dynamodb.NewImage.refreshToken.S
+		refreshToken: item.dynamodb.NewImage.refreshToken.S,
+		id: item.dynamodb.NewImage.id.S
 	}));
 	// userek topArtistjainak updateelése a MusicTaste táblában
 	await updateMusicTaste(usersToUpdate);
@@ -83,7 +84,6 @@ async function updateMusicTaste(users) {
 			};
 			
 			var documentClient = new AWS.DynamoDB.DocumentClient();
-			
 			try {
 				await documentClient.put(params).promise();
 			} catch (err) {

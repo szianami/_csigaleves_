@@ -12,10 +12,11 @@ type User @model
 type MusicTaste @model @key(fields:["username","artist"])
 @key(name:"byArtist",fields:["artist"],queryField:"byArtist")
 {
-  id: ID!
   username: String!
   artist: String!
-  updatedAt: AWSDateTime!
+  artistName: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
 }
 
 type Match @model
@@ -27,4 +28,6 @@ type Match @model
   user1ID: String!
   user2ID: String!
   artist: String!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
 }

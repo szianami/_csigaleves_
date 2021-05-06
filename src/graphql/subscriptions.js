@@ -46,33 +46,33 @@ export const onDeleteUser = /* GraphQL */ `
 export const onCreateMusicTaste = /* GraphQL */ `
   subscription OnCreateMusicTaste {
     onCreateMusicTaste {
-      id
       username
       artist
-      updatedAt
+      artistName
       createdAt
+      updatedAt
     }
   }
 `;
 export const onUpdateMusicTaste = /* GraphQL */ `
   subscription OnUpdateMusicTaste {
     onUpdateMusicTaste {
-      id
       username
       artist
-      updatedAt
+      artistName
       createdAt
+      updatedAt
     }
   }
 `;
 export const onDeleteMusicTaste = /* GraphQL */ `
   subscription OnDeleteMusicTaste {
     onDeleteMusicTaste {
-      id
       username
       artist
-      updatedAt
+      artistName
       createdAt
+      updatedAt
     }
   }
 `;

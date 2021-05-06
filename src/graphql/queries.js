@@ -39,11 +39,11 @@ export const listUsers = /* GraphQL */ `
 export const getMusicTaste = /* GraphQL */ `
   query GetMusicTaste($username: String!, $artist: String!) {
     getMusicTaste(username: $username, artist: $artist) {
-      id
       username
       artist
-      updatedAt
+      artistName
       createdAt
+      updatedAt
     }
   }
 `;
@@ -65,11 +65,11 @@ export const listMusicTastes = /* GraphQL */ `
       sortDirection: $sortDirection
     ) {
       items {
-        id
         username
         artist
-        updatedAt
+        artistName
         createdAt
+        updatedAt
       }
       nextToken
     }
@@ -163,11 +163,11 @@ export const byArtist = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
-        id
         username
         artist
-        updatedAt
+        artistName
         createdAt
+        updatedAt
       }
       nextToken
     }

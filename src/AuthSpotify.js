@@ -14,14 +14,13 @@ Amplify.configure(awsExports);
 const AWS = require("aws-sdk");
 AWS.config.update({ region: "eu-central-1" });
 
-const spotifyApi = new SpotifyWebApi();
-
 function withSpotifyAuthenticator(WrappedComponent) {
 
   return class extends React.Component {
     
     constructor(props) {
       super(props);
+      this.spotifyApi = new SpotifyWebApi();
       this.state = {
         authenticated: false,
         spinner: true,
@@ -34,8 +33,8 @@ function withSpotifyAuthenticator(WrappedComponent) {
     // }
 
     async componentDidMount() {
-
-
+      const currentUser = await Auth.currentAuthenticatedUser();
+      this.setState({currentUser});
 
       console.log("SpotifyAuth componentDidMount");
       let refreshToken = await this.getRefreshToken();
@@ -43,12 +42,12 @@ function withSpotifyAuthenticator(WrappedComponent) {
       if (refreshToken) {
         
         let accessToken = await this.getAccessToken(refreshToken);
-        spotifyApi.setAccessToken(accessToken);
+        this.spotifyApi.setAccessToken(accessToken);
 
         try {
-          const user = await this.fetchUserData();
+          const currentSpotifyUser = await this.fetchUserData();
           const artists = await this.fetchTopArtists();
-          this.setState({authenticated: true, spinner: false, user, artists});
+          this.setState({authenticated: true, spinner: false, currentSpotifyUser, artists});
         } catch (err) {
           console.log(err);
         }
@@ -90,8 +89,7 @@ function withSpotifyAuthenticator(WrappedComponent) {
 
               this.setState({accessToken: res.access_token})
 
-              let user = await Auth.currentAuthenticatedUser();
-              console.log("current user sub -- " + user.attributes.sub);
+              console.log("current user sub -- " + currentUser.attributes.sub);
 
               try {
                 let now = new Date().toISOString;
@@ -99,20 +97,19 @@ function withSpotifyAuthenticator(WrappedComponent) {
                   query: mutations.updateUser,
                   variables: {
                     input: {
-                      id: user.attributes.sub,
+                      id: currentUser.attributes.sub,
                       refreshToken: res.refresh_token,
                       spotifyAuthorized: 'true',
-                      // musicTasteUpdatedAt: a tábla változása triggereli az updateMusicTaste lambdát
                     },
                   },
                 });
                 console.log(updateUser);
                 
-                spotifyApi.setAccessToken(res.access_token);
+                this.spotifyApi.setAccessToken(res.access_token);
                 try {
-                  const user = await this.fetchUserData();
+                  const currentSpotifyUser = await this.fetchUserData();
                   const artists = await this.fetchTopArtists();
-                  this.setState({authenticated: true, spinner: false, user, artists});
+                  this.setState({authenticated: true, spinner: false, currentSpotifyUser, artists});
                 } catch (err) {
                   console.log(err);
                 }
@@ -132,12 +129,10 @@ function withSpotifyAuthenticator(WrappedComponent) {
 
     getRefreshToken = async () => {
 
-      let user = await Auth.currentAuthenticatedUser();
-
       try {
         let userdata = await API.graphql({
           query: queries.getUser,
-          variables: { id: user.attributes.sub },
+          variables: { id: this.state.currentUser.attributes.sub },
         });
         
         return (userdata.data.getUser.refreshToken);
@@ -196,11 +191,11 @@ function withSpotifyAuthenticator(WrappedComponent) {
     }
 
     fetchUserData = async () => {
-      const user = await spotifyApi.getMe();
-      console.log('current user ', user);
-      return user;
+      const currentSpotifyUser = await this.spotifyApi.getMe();
+      console.log('current user ', currentSpotifyUser);
+      return currentSpotifyUser;
 
-      // spotifyApi.getMe().then(
+      // this.spotifyApi.getMe().then(
       //   (user) => {
       //     console.log('current user ', user);
       //     this.setState({user});
@@ -212,7 +207,7 @@ function withSpotifyAuthenticator(WrappedComponent) {
     }
 
     fetchTopArtists = async () => {
-      const artists = await spotifyApi.getMyTopArtists();
+      const artists = await this.spotifyApi.getMyTopArtists();
       console.log('artists ', artists);
       return artists;
     }
@@ -232,7 +227,12 @@ function withSpotifyAuthenticator(WrappedComponent) {
       }
 
       if (this.state.authenticated) {
-        return <WrappedComponent user={this.state.user} artists={this.state.artists}/>;
+        return <WrappedComponent
+          currentUser = {this.state.currentUser}
+          currentSpotifyUser = { this.state.currentSpotifyUser }
+          artists = { this.state.artists }
+          spotifyApi =  {this.spotifyApi }
+        />;
       } else {
         var state = "staaate"; // generateRandomString(16);
         var scope = "user-read-private user-read-email user-top-read";
