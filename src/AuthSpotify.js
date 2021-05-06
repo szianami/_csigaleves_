@@ -8,6 +8,7 @@ import * as mutations from "./graphql/mutations";
 import * as queries from "./graphql/queries";
 import config from "./config.json"
 import spinner from './spinner.gif';
+import smiley from './smiley.png';
 
 Amplify.configure(awsExports);
 const AWS = require("aws-sdk");
@@ -249,10 +250,10 @@ function withSpotifyAuthenticator(WrappedComponent) {
 
         return (
           <div style={styles.container}>
-            <h1 style={styles.text}>Spotify Auth</h1>
-            <h2 style={styles.text}>Sign in to get started</h2>
+            <img src={smiley} style={styles.smiley_img} />
+            <h1 style={styles.text}>YOU'RE ALMOST IN. SHOW ME YOUR MUSIC TASTE.</h1>
             <a href={authorizeUrl} style={styles.button}>
-              Continue with Spotify
+              Connect your spotify
             </a>
             <AmplifySignOut/>
           </div>
@@ -272,7 +273,24 @@ const styles = {
     justifyContent: "center",
     padding: 20,
   },
-  text: { fontFamily: "sans-serif", fontWeight: "lighter" }
+  text: {
+    "fontFamily": "Tenor Sans",
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontSize": "36px",
+    "lineHeight": "40px",
+    "display": "flex",
+    "alignItems": "center",
+    "textAlign": "center",
+    "color": "#000000"
+  }, 
+  smiley_img: {
+    "position": "absolute",
+    "width": "279px",
+    "height": "188px",
+    "left": "541px",
+    "top": "183px"
+  }
 };
 
 export { withSpotifyAuthenticator };

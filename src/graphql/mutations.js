@@ -11,6 +11,8 @@ export const createUser = /* GraphQL */ `
       username
       email
       refreshToken
+      spotifyAuthorized
+      musicTasteUpdatedAt
       createdAt
       updatedAt
     }
@@ -26,6 +28,8 @@ export const updateUser = /* GraphQL */ `
       username
       email
       refreshToken
+      spotifyAuthorized
+      musicTasteUpdatedAt
       createdAt
       updatedAt
     }
@@ -41,6 +45,95 @@ export const deleteUser = /* GraphQL */ `
       username
       email
       refreshToken
+      spotifyAuthorized
+      musicTasteUpdatedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMusicTaste = /* GraphQL */ `
+  mutation CreateMusicTaste(
+    $input: CreateMusicTasteInput!
+    $condition: ModelMusicTasteConditionInput
+  ) {
+    createMusicTaste(input: $input, condition: $condition) {
+      id
+      username
+      artist
+      updatedAt
+      createdAt
+    }
+  }
+`;
+export const updateMusicTaste = /* GraphQL */ `
+  mutation UpdateMusicTaste(
+    $input: UpdateMusicTasteInput!
+    $condition: ModelMusicTasteConditionInput
+  ) {
+    updateMusicTaste(input: $input, condition: $condition) {
+      id
+      username
+      artist
+      updatedAt
+      createdAt
+    }
+  }
+`;
+export const deleteMusicTaste = /* GraphQL */ `
+  mutation DeleteMusicTaste(
+    $input: DeleteMusicTasteInput!
+    $condition: ModelMusicTasteConditionInput
+  ) {
+    deleteMusicTaste(input: $input, condition: $condition) {
+      id
+      username
+      artist
+      updatedAt
+      createdAt
+    }
+  }
+`;
+export const createMatch = /* GraphQL */ `
+  mutation CreateMatch(
+    $input: CreateMatchInput!
+    $condition: ModelMatchConditionInput
+  ) {
+    createMatch(input: $input, condition: $condition) {
+      id
+      user1ID
+      user2ID
+      artist
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMatch = /* GraphQL */ `
+  mutation UpdateMatch(
+    $input: UpdateMatchInput!
+    $condition: ModelMatchConditionInput
+  ) {
+    updateMatch(input: $input, condition: $condition) {
+      id
+      user1ID
+      user2ID
+      artist
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMatch = /* GraphQL */ `
+  mutation DeleteMatch(
+    $input: DeleteMatchInput!
+    $condition: ModelMatchConditionInput
+  ) {
+    deleteMatch(input: $input, condition: $condition) {
+      id
+      user1ID
+      user2ID
+      artist
       createdAt
       updatedAt
     }

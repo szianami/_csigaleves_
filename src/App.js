@@ -40,6 +40,10 @@ class App extends React.Component {
         <h1 style={styles.text}>{display_name}</h1>
         <img src={src} style={{borderRadius: '100%', border: '1px solid #dddddd'}} />
         <h3 style={styles.text}>friends: {this.props.user.followers.total}</h3>
+        <h3 style={styles.text}>YOUR MUSIC BUDDIES</h3>
+        <div>
+          
+        </div>
         <AmplifySignOut/>
       </div>
     )
