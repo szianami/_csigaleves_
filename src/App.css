@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Tenor Sans";
+  src: local("Tenor Sans"),
+    url("./fonts/TenorSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
 .App {
   text-align: center;
 }
@@ -12,6 +19,142 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+body {
+  background-color: black;
+  font-family: "Tenor Sans";
+  font-size: 24px;
+  color: white;
+}
+.container {
+  margin: auto;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-container {
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.friends-container {
+  margin: auto;
+}
+
+.artist-flex-container {
+  flex-wrap: wrap;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 1200px;
+  justify-content: center;
+  align-items: center;
+}
+.friend-flex-container {
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 1200px;
+  padding-bottom: 20px;
+}
+
+.artist-flex-item {
+  background-color: #131313;
+  margin: 20px;
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  text-align: center;
+}
+
+.friend-flex-item {
+  background-color: #131313;
+  margin: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+}
+.profile-holder {
+  padding-right: 20px;
+}
+
+.profile-img {
+  border-radius: 50%; 
+}
+
+.user-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center right;
+}
+
+.artist-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center right;
+}
+
+.text {
+  font-family: "Tenor Sans";
+  font-size: 24px;
+  color: white;
+}
+
+.padding-bottom {
+  padding-bottom: 20px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+/* On screens that are 600px or less */
+@media screen and (max-width: 600px) {
+  .container {
+    width: 300px;
+  }
+}
+
+
+.button { 
+  background-color: #1db954;
+  color: white;
+  outline: none;
+  font-size: 18;
+  font-family: sans-serif;
+  font-weight: lighter;
+  text-decoration: none;
+  padding: 0.85rem 0.65rem;
+  border-radius: .52em;
+}
+.artistPic {
+  width: 10rem;
+}
+
+.center {
+  display: 'flex'; 
+  align-items: 'center';
+  justify-content: 'center';
+}
+
 
 .App-header {
   background-color: #282c34;

@@ -6,6 +6,7 @@ type User @model
   email: String!
   refreshToken: String
   spotifyAuthorized: String!
+  spotifyUserID: String
   musicTasteUpdatedAt: AWSDateTime
 }
 
@@ -13,6 +14,7 @@ type MusicTaste @model @key(fields:["username","artist"])
 @key(name:"byArtist",fields:["artist"],queryField:"byArtist")
 {
   username: String!
+  spotifyUserID: String!
   artist: String!
   artistName: String
   createdAt: AWSDateTime
@@ -26,7 +28,9 @@ type Match @model
 {
   id: ID!
   user1ID: String!
+  user1SpotifyID: String!
   user2ID: String!
+  user2SpotifyID: String!
   artist: String!
   createdAt: AWSDateTime
   updatedAt: AWSDateTime

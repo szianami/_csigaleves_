@@ -9,6 +9,7 @@ export const onCreateUser = /* GraphQL */ `
       email
       refreshToken
       spotifyAuthorized
+      spotifyUserID
       musicTasteUpdatedAt
       createdAt
       updatedAt
@@ -23,6 +24,7 @@ export const onUpdateUser = /* GraphQL */ `
       email
       refreshToken
       spotifyAuthorized
+      spotifyUserID
       musicTasteUpdatedAt
       createdAt
       updatedAt
@@ -37,6 +39,7 @@ export const onDeleteUser = /* GraphQL */ `
       email
       refreshToken
       spotifyAuthorized
+      spotifyUserID
       musicTasteUpdatedAt
       createdAt
       updatedAt
@@ -47,6 +50,7 @@ export const onCreateMusicTaste = /* GraphQL */ `
   subscription OnCreateMusicTaste {
     onCreateMusicTaste {
       username
+      spotifyUserID
       artist
       artistName
       createdAt
@@ -58,6 +62,7 @@ export const onUpdateMusicTaste = /* GraphQL */ `
   subscription OnUpdateMusicTaste {
     onUpdateMusicTaste {
       username
+      spotifyUserID
       artist
       artistName
       createdAt
@@ -69,6 +74,7 @@ export const onDeleteMusicTaste = /* GraphQL */ `
   subscription OnDeleteMusicTaste {
     onDeleteMusicTaste {
       username
+      spotifyUserID
       artist
       artistName
       createdAt
@@ -81,7 +87,9 @@ export const onCreateMatch = /* GraphQL */ `
     onCreateMatch {
       id
       user1ID
+      user1SpotifyID
       user2ID
+      user2SpotifyID
       artist
       createdAt
       updatedAt
@@ -93,7 +101,9 @@ export const onUpdateMatch = /* GraphQL */ `
     onUpdateMatch {
       id
       user1ID
+      user1SpotifyID
       user2ID
+      user2SpotifyID
       artist
       createdAt
       updatedAt
@@ -105,7 +115,9 @@ export const onDeleteMatch = /* GraphQL */ `
     onDeleteMatch {
       id
       user1ID
+      user1SpotifyID
       user2ID
+      user2SpotifyID
       artist
       createdAt
       updatedAt

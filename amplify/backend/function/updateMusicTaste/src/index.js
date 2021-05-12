@@ -33,7 +33,8 @@ exports.handler = async function(event, ctx, callback) {
 	}).map(item => ({
 		username: item.dynamodb.NewImage.username.S,
 		refreshToken: item.dynamodb.NewImage.refreshToken.S,
-		id: item.dynamodb.NewImage.id.S
+		id: item.dynamodb.NewImage.id.S,
+		spotifyUserID: item.dynamodb.NewImage.spotifyUserID.S,
 	}));
 	// userek topArtistjainak updateelése a MusicTaste táblában
 	await updateMusicTaste(usersToUpdate);
@@ -78,6 +79,7 @@ async function updateMusicTaste(users) {
 				TableName : 'MusicTaste-d5p6uqeierdf5jrymwu6c222aa-develop',
 				Item: {
 					username: user.username,
+					spotifyUserID: user.spotifyUserID,
 					artist: artist.id,
 					artistName: artist.name,
 				},
@@ -148,7 +150,9 @@ async function matchUsers(user1, user2, artistID) {
 			Item: {
 				id: id,
 				user1ID: user1.username,
+				user1SpotifyID: user1.spotifyUserID,
 				user2ID: user2.username,
+				user2SpotifyID: user2.spotifyUserID,
 				artist: artistID,
 			},
 	};

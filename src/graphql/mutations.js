@@ -12,6 +12,7 @@ export const createUser = /* GraphQL */ `
       email
       refreshToken
       spotifyAuthorized
+      spotifyUserID
       musicTasteUpdatedAt
       createdAt
       updatedAt
@@ -29,6 +30,7 @@ export const updateUser = /* GraphQL */ `
       email
       refreshToken
       spotifyAuthorized
+      spotifyUserID
       musicTasteUpdatedAt
       createdAt
       updatedAt
@@ -46,6 +48,7 @@ export const deleteUser = /* GraphQL */ `
       email
       refreshToken
       spotifyAuthorized
+      spotifyUserID
       musicTasteUpdatedAt
       createdAt
       updatedAt
@@ -59,6 +62,7 @@ export const createMusicTaste = /* GraphQL */ `
   ) {
     createMusicTaste(input: $input, condition: $condition) {
       username
+      spotifyUserID
       artist
       artistName
       createdAt
@@ -73,6 +77,7 @@ export const updateMusicTaste = /* GraphQL */ `
   ) {
     updateMusicTaste(input: $input, condition: $condition) {
       username
+      spotifyUserID
       artist
       artistName
       createdAt
@@ -87,6 +92,7 @@ export const deleteMusicTaste = /* GraphQL */ `
   ) {
     deleteMusicTaste(input: $input, condition: $condition) {
       username
+      spotifyUserID
       artist
       artistName
       createdAt
@@ -102,7 +108,9 @@ export const createMatch = /* GraphQL */ `
     createMatch(input: $input, condition: $condition) {
       id
       user1ID
+      user1SpotifyID
       user2ID
+      user2SpotifyID
       artist
       createdAt
       updatedAt
@@ -117,7 +125,9 @@ export const updateMatch = /* GraphQL */ `
     updateMatch(input: $input, condition: $condition) {
       id
       user1ID
+      user1SpotifyID
       user2ID
+      user2SpotifyID
       artist
       createdAt
       updatedAt
@@ -132,7 +142,9 @@ export const deleteMatch = /* GraphQL */ `
     deleteMatch(input: $input, condition: $condition) {
       id
       user1ID
+      user1SpotifyID
       user2ID
+      user2SpotifyID
       artist
       createdAt
       updatedAt

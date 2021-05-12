@@ -87,6 +87,17 @@ function withSpotifyAuthenticator(WrappedComponent) {
               console.log(res);
               console.log("refresh token: " + res.refresh_token);
 
+              this.spotifyApi.setAccessToken(res.access_token);
+
+              try {
+                const currentSpotifyUser = await this.fetchUserData();
+                const artists = await this.fetchTopArtists();
+                this.setState({authenticated: true, spinner: false, currentSpotifyUser, artists});
+              } catch (err) {
+                console.log(err);
+              }
+
+              // ezek a setstate-ek minek?
               this.setState({accessToken: res.access_token})
 
               console.log("current user sub -- " + currentUser.attributes.sub);
@@ -100,20 +111,11 @@ function withSpotifyAuthenticator(WrappedComponent) {
                       id: currentUser.attributes.sub,
                       refreshToken: res.refresh_token,
                       spotifyAuthorized: 'true',
+                      spotifyUserID: this.state.currentSpotifyUser.id,
                     },
                   },
                 });
                 console.log(updateUser);
-                
-                this.spotifyApi.setAccessToken(res.access_token);
-                try {
-                  const currentSpotifyUser = await this.fetchUserData();
-                  const artists = await this.fetchTopArtists();
-                  this.setState({authenticated: true, spinner: false, currentSpotifyUser, artists});
-                } catch (err) {
-                  console.log(err);
-                }
-
               } catch (err) {
                 console.log({ err });
               }

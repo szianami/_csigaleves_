@@ -9,6 +9,7 @@ export const getUser = /* GraphQL */ `
       email
       refreshToken
       spotifyAuthorized
+      spotifyUserID
       musicTasteUpdatedAt
       createdAt
       updatedAt
@@ -28,6 +29,7 @@ export const listUsers = /* GraphQL */ `
         email
         refreshToken
         spotifyAuthorized
+        spotifyUserID
         musicTasteUpdatedAt
         createdAt
         updatedAt
@@ -40,6 +42,7 @@ export const getMusicTaste = /* GraphQL */ `
   query GetMusicTaste($username: String!, $artist: String!) {
     getMusicTaste(username: $username, artist: $artist) {
       username
+      spotifyUserID
       artist
       artistName
       createdAt
@@ -66,6 +69,7 @@ export const listMusicTastes = /* GraphQL */ `
     ) {
       items {
         username
+        spotifyUserID
         artist
         artistName
         createdAt
@@ -80,7 +84,9 @@ export const getMatch = /* GraphQL */ `
     getMatch(id: $id, artist: $artist) {
       id
       user1ID
+      user1SpotifyID
       user2ID
+      user2SpotifyID
       artist
       createdAt
       updatedAt
@@ -107,7 +113,9 @@ export const listMatchs = /* GraphQL */ `
       items {
         id
         user1ID
+        user1SpotifyID
         user2ID
+        user2SpotifyID
         artist
         createdAt
         updatedAt
@@ -139,6 +147,7 @@ export const usersByUpdateDate = /* GraphQL */ `
         email
         refreshToken
         spotifyAuthorized
+        spotifyUserID
         musicTasteUpdatedAt
         createdAt
         updatedAt
@@ -164,6 +173,7 @@ export const byArtist = /* GraphQL */ `
     ) {
       items {
         username
+        spotifyUserID
         artist
         artistName
         createdAt
@@ -191,7 +201,9 @@ export const byUser1 = /* GraphQL */ `
       items {
         id
         user1ID
+        user1SpotifyID
         user2ID
+        user2SpotifyID
         artist
         createdAt
         updatedAt
@@ -218,7 +230,9 @@ export const byUser2 = /* GraphQL */ `
       items {
         id
         user1ID
+        user1SpotifyID
         user2ID
+        user2SpotifyID
         artist
         createdAt
         updatedAt
