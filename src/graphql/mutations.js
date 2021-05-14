@@ -151,3 +151,45 @@ export const deleteMatch = /* GraphQL */ `
     }
   }
 `;
+export const createUserTopTracks = /* GraphQL */ `
+  mutation CreateUserTopTracks(
+    $input: CreateUserTopTracksInput!
+    $condition: ModelUserTopTracksConditionInput
+  ) {
+    createUserTopTracks(input: $input, condition: $condition) {
+      username
+      spotifyUserID
+      track
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserTopTracks = /* GraphQL */ `
+  mutation UpdateUserTopTracks(
+    $input: UpdateUserTopTracksInput!
+    $condition: ModelUserTopTracksConditionInput
+  ) {
+    updateUserTopTracks(input: $input, condition: $condition) {
+      username
+      spotifyUserID
+      track
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserTopTracks = /* GraphQL */ `
+  mutation DeleteUserTopTracks(
+    $input: DeleteUserTopTracksInput!
+    $condition: ModelUserTopTracksConditionInput
+  ) {
+    deleteUserTopTracks(input: $input, condition: $condition) {
+      username
+      spotifyUserID
+      track
+      createdAt
+      updatedAt
+    }
+  }
+`;

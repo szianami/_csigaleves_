@@ -25,6 +25,7 @@ body {
   font-family: "Tenor Sans";
   font-size: 24px;
   color: white;
+  justify-content: center;
 }
 .container {
   margin: auto;
@@ -70,6 +71,7 @@ body {
 
 .artist-flex-item {
   background-color: #131313;
+  border-radius: 2%;
   margin: 20px;
   padding: 20px;
   align-items: center;
@@ -77,10 +79,16 @@ body {
   flex-direction: column;
   width: 250px;
   text-align: center;
+  transition: 0.4s;
+}
+
+.artist-flex-item:hover {
+  background-color: #252525;
 }
 
 .friend-flex-item {
   background-color: #131313;
+  border-radius: 2%;
   margin: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -88,13 +96,23 @@ body {
   flex-direction: column;
   align-items: center;
   width: 250px;
+  transition: 0.4s;
 }
+
+.friend-flex-item:hover {
+  background-color: #252525;
+}
+
 .profile-holder {
   padding-right: 20px;
 }
 
 .profile-img {
-  border-radius: 50%; 
+  width: 300px;
+  height: 300px;  
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center right; 
 }
 
 .user-img {
@@ -133,17 +151,45 @@ body {
   }
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 1200px; 
+  margin: auto;
+}
+
+.header-flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.header-flex-item {
+  padding-left: 50px;
+}
+
+.header-flex-item:hover {
+  text-decoration: underline;
+}
+
+.smiley {
+  width: 100px;
+}
 
 .button { 
-  background-color: #1db954;
-  color: white;
+  background-color: #252525;
   outline: none;
   font-size: 18;
-  font-family: sans-serif;
-  font-weight: lighter;
   text-decoration: none;
   padding: 0.85rem 0.65rem;
-  border-radius: .52em;
+  border-radius: 2px;
+  margin-bottom: 20px;
+  transition: 0.4s;
+}
+.button:hover { 
+  background-color: #303030;
 }
 .artistPic {
   width: 10rem;

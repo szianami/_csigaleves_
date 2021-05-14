@@ -124,3 +124,36 @@ export const onDeleteMatch = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserTopTracks = /* GraphQL */ `
+  subscription OnCreateUserTopTracks {
+    onCreateUserTopTracks {
+      username
+      spotifyUserID
+      track
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserTopTracks = /* GraphQL */ `
+  subscription OnUpdateUserTopTracks {
+    onUpdateUserTopTracks {
+      username
+      spotifyUserID
+      track
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserTopTracks = /* GraphQL */ `
+  subscription OnDeleteUserTopTracks {
+    onDeleteUserTopTracks {
+      username
+      spotifyUserID
+      track
+      createdAt
+      updatedAt
+    }
+  }
+`;

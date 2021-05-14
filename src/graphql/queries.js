@@ -124,6 +124,45 @@ export const listMatchs = /* GraphQL */ `
     }
   }
 `;
+export const getUserTopTracks = /* GraphQL */ `
+  query GetUserTopTracks($username: String!, $track: String!) {
+    getUserTopTracks(username: $username, track: $track) {
+      username
+      spotifyUserID
+      track
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserTopTrackss = /* GraphQL */ `
+  query ListUserTopTrackss(
+    $username: String
+    $track: ModelStringKeyConditionInput
+    $filter: ModelUserTopTracksFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserTopTrackss(
+      username: $username
+      track: $track
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        username
+        spotifyUserID
+        track
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const usersByUpdateDate = /* GraphQL */ `
   query UsersByUpdateDate(
     $spotifyAuthorized: String
@@ -156,6 +195,36 @@ export const usersByUpdateDate = /* GraphQL */ `
     }
   }
 `;
+export const userBySpotifyUserID = /* GraphQL */ `
+  query UserBySpotifyUserID(
+    $spotifyUserID: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userBySpotifyUserID(
+      spotifyUserID: $spotifyUserID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        email
+        refreshToken
+        spotifyAuthorized
+        spotifyUserID
+        musicTasteUpdatedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const byArtist = /* GraphQL */ `
   query ByArtist(
     $artist: String
@@ -166,6 +235,33 @@ export const byArtist = /* GraphQL */ `
   ) {
     byArtist(
       artist: $artist
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        username
+        spotifyUserID
+        artist
+        artistName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const musicBySpotifyUserID = /* GraphQL */ `
+  query MusicBySpotifyUserID(
+    $spotifyUserID: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelMusicTasteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    musicBySpotifyUserID(
+      spotifyUserID: $spotifyUserID
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -234,6 +330,32 @@ export const byUser2 = /* GraphQL */ `
         user2ID
         user2SpotifyID
         artist
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const tracksBySpotifyUserID = /* GraphQL */ `
+  query TracksBySpotifyUserID(
+    $spotifyUserID: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserTopTracksFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    tracksBySpotifyUserID(
+      spotifyUserID: $spotifyUserID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        username
+        spotifyUserID
+        track
         createdAt
         updatedAt
       }
